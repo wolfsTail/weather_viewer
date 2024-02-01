@@ -2,3 +2,6 @@ __pycache__
 .env
 env
 .vscode
+.templates
+sqlite3database
+*.sqlite
