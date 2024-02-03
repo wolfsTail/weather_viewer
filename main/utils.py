@@ -1,12 +1,8 @@
 import requests
-from decouple import config
 
 
-API_KEY: str = config('OPEN_WEATHER_API_KEY', cast=str, default="api_key")
-
-
-def get_coordinates(city: str, counry_code: str) -> tuple | None:
-    location_url: str = f"http://api.openweathermap.org/geo/1.0/direct?q={city},{counry_code}&limit=1&appid={API_KEY}"
+def get_coordinates(city: str, API_KEY) -> tuple | None:
+    location_url: str = f"http://api.openweathermap.org/geo/1.0/direct?q={city}&limit=1&appid={API_KEY}"
     result = requests.get(location_url)
     if result.status_code == 200:
         result = result.json()
@@ -14,21 +10,27 @@ def get_coordinates(city: str, counry_code: str) -> tuple | None:
     return None
 
 
-def get_weather_value(coordinates: tuple) -> dict | None:
+def get_weather_value(coordinates: tuple, API_KEY) -> dict | None:
     if coordinates is None:
         raise ValueError("Api coordinates call failed")
     lat, lon = coordinates
-    weather_url: str = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&units=metric&appid={API_KEY}"
+    weather_url: str = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&exclude=current,minutely,hourly,alerts&units=metric&appid={API_KEY}"
     result = requests.get(weather_url)
     if result.status_code == 200:
         result = result.json()
         return result
     return None
 
+def get_weather_by_city(city: str) -> dict | None:
+    from decouple import config
+
+    API_KEY: str = config('OPEN_WEATHER_API_KEY', cast=str, default="api_key")
+    coordinates = get_coordinates(city, API_KEY)
+    return get_weather_value(coordinates, API_KEY)
+
+
 if __name__ == "__main__":
     city = "Tula"
-    counry_code = "ru"
-    coordinates = get_coordinates(city, counry_code)
-    print(coordinates, type(coordinates))
-    weather = get_weather_value(coordinates)
+    counry_code = "ru"  
+    weather = get_weather_by_city(city)
     print(weather, type(weather))

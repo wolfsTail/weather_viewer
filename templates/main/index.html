@@ -3,8 +3,20 @@
 {% block content %}
 
 <div class="row" style="margin-bottom: 200px; margin-top: 160px">
-    <p>ГЛАВНАЯ!</p>
+    <div>
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="city" placeholder="Название города">
+            <button type="submit">Узнать погоду!</button>
+        </form>
+    </div>
 
+    <div class="compare-container">
+        {% if weather_data %}
+            <div class="city-container">
+                {% include 'main/include/city_weather.html'%}
+            </div>
+        {% endif %}
 </div>
 
 {% endblock content %}
