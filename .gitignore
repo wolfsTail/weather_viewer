@@ -6,3 +6,4 @@ env
 sqlite3database
 *.sqlite
 .sources
+static
