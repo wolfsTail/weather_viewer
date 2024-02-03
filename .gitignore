@@ -5,3 +5,4 @@ env
 .templates
 sqlite3database
 *.sqlite
+.sources

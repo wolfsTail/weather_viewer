@@ -3,7 +3,8 @@ from django.http import HttpResponse
 
 
 def index(request):
-    return HttpResponse("Здесь будет главная страница приложения!")
+    context = {"title": "Главная"}
+    return render(request, "main/index.html", context)    
 
 def favorites(request):
     return HttpResponse("Здесь будет список избранных городов!")

@@ -1,0 +1,22 @@
+{% extends 'layout/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %} {{title}} {% endblock title %}
+
+{% block content %}
+<div class="row" style="margin-bottom: 100px; margin-top: 60px">
+    <div class="col-md-3 offset-md-5">
+        <h3 class="text-center">Профиль пользователя</h3>
+        <hr>
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <p>* - для обновления данного поля обратитесь к администратору</p>            
+            <input type="submit" class="btn btn-success btn-block" value="Обновить профиль">
+        </form>
+    </div>
+</div>
+
+</div>
+{% endblock content %}
