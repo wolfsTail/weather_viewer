@@ -9,4 +9,5 @@ urlpatterns = [
     path('', views.index, name="index"),
     path('about/', views.about, name="about"),
     path('favorites/', views.favorites, name="favorites"),
+    path('create_location/', views.create_location, name="create_location"),
 ]

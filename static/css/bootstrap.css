@@ -12067,17 +12067,4 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
-footer .footer-container {
-  background-color: #e3e3e3;
-  color: #333; 
-  text-align: center; 
-  padding: 10px; 
-  font-size: 16px; 
-  height: 40px; 
-  width: 100%; 
-  box-sizing: border-box; 
-  position: fixed; 
-  bottom: 0;
-}
-
 /*# sourceMappingURL=bootstrap.css.map */

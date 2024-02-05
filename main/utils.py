@@ -21,16 +21,21 @@ def get_weather_value(coordinates: tuple, API_KEY) -> dict | None:
         return result
     return None
 
-def get_weather_by_city(city: str) -> dict | None:
+def get_weather_by_city(city: str, coordinates: tuple | None = None) -> dict | None:
     from decouple import config
 
+
     API_KEY: str = config('OPEN_WEATHER_API_KEY', cast=str, default="api_key")
+
+    if coordinates:
+        return get_weather_value(coordinates, API_KEY)
+    
     coordinates = get_coordinates(city, API_KEY)
     return get_weather_value(coordinates, API_KEY)
 
 
 if __name__ == "__main__":
-    city = "Tula"
+    city = "Минск"
     counry_code = "ru"  
     weather = get_weather_by_city(city)
     print(weather, type(weather))

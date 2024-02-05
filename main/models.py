@@ -1,4 +1,5 @@
 from django.db import models
+from traitlets import default
 
 from users.models import User
 
@@ -11,8 +12,8 @@ class Location(models.Model):
         related_name="locations",
         verbose_name="Пользователь",
     )
-    latitude = models.FloatField(verbose_name="Широта")
-    longitude = models.FloatField(verbose_name="Долгота")
+    latitude = models.FloatField(verbose_name="Широта", default=0.0)
+    longitude = models.FloatField(verbose_name="Долгота", default=0.0)
 
     def __str__(self):
         return f"{self.name}: lat:{self.latitude}, lon:{self.longitude}"

@@ -1,12 +1,12 @@
 {% extends 'layout/base.html' %}
-{% comment %} {% load crispy_forms_tags %} {% endcomment %}
+
 {% block content %}
 
 <div class="row" style="margin-bottom: 200px; margin-top: 160px">
     <div>
         <form method="post">
             {% csrf_token %}
-            <input type="text" name="city" placeholder="Название города">
+            <input type="text" name="city" placeholder="Название населенного">
             <button type="submit">Узнать погоду!</button>
         </form>
     </div>
