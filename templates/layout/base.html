@@ -25,6 +25,7 @@
 </style>
 
 <body>
+    <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
     {% include 'includes/navbar.html' %}
 
     {% block content %}
@@ -36,6 +37,21 @@
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     {% block js %}
     {% endblock js %}
+    <script src="https://unpkg.com/htmx.org@1.9.4"></script>
+    <script>
+        function cngElementsAtr(cls, atr, val){
+            var elems = document.getElementsByClassName(cls);
+            for(var i = 0; i < elems.length; i++) {
+                elems[i][atr] = val;
+            }
+        }
+        document.body.addEventListener('htmx:afterRequest', (event) => {
+            path_str = event.detail.pathInfo.requestPath;
+            if(path_str.includes('create_location')){
+                cngElementsAtr('clrtxt', 'value', '');
+            }
+        });
+    </script>
 </body>
 <footer>
     <div class="footer-container">

@@ -67,8 +67,22 @@ def favorites(request):
 def create_location(request):
     form = CreateLocationForm(request.POST)
     if form.is_valid():
-        form.save()
-    return render(request, "main/include/city_weather.html", {"form": form})
+        obj = form.save(commit=False)
+        city = form.cleaned_data["name"]
+        weather_raw_data = get_weather_by_city(city)
+        if weather_raw_data is not None:
+            weather_data = {
+                "today": datetime.datetime.utcfromtimestamp(weather_raw_data["dt"]).strftime("%d-%m-%Y"),
+                "city": city,
+                "temperature": weather_raw_data["main"]["temp"],
+                "description": weather_raw_data["weather"][0]["description"],
+                "icon": weather_raw_data["weather"][0]["icon"],
+            }
+        obj.user = request.user
+        obj.latitude = weather_raw_data["coord"]["lat"]
+        obj.longitude = weather_raw_data["coord"]["lon"]
+        obj.save()
+    return render(request, "main/include/city_weather.html", {"weather_data": weather_data})
 
 def about(request):
     return HttpResponse("Здесь будет информация о приложении!")

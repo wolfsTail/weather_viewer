@@ -2,5 +2,9 @@
     <div>
         {{ form.name }}
     </div>
-    <button type="submit" class="disbtn"> Добавить </button>
+    <button type="submit" 
+    class="disbtn"
+    hx-post="{% url 'main:create_location' %}"
+    hx-target="#location_list"
+    hx-swap="beforeend"> Добавить </button>
 </form>
