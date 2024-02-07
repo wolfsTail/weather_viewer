@@ -4,20 +4,12 @@
 
 {% include "main/include/create_city_form.html" %}
 
-<div id="location_list" class="cities-container">
-    {% if not weather_data_list %}
+<div id="location_list" class="cities-container" hx-trigger="htmx:afterSwap">
     
-        <div class="city-container">
-            <h3>В избранных пока нет ни одного населенного пункта!</h3>
-        </div>
-    
-    {% else %}
-    {% for weather_data in weather_data_list %}
-        <div class="city-container">
-            {% include 'main/include/city_weather.html'%}
-        </div>
-    {% endfor %}
-    {% endif %}
+        {% for weather_data in weather_data_list %}            
+                {% include 'main/include/city_weather_favorites.html'%}            
+        {% endfor %}
+
 </div>
 
 {% endblock content %}

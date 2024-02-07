@@ -1,6 +1,6 @@
 import datetime
 
-from django.shortcuts import render, get_list_or_404, get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_http_methods
 from django.http import HttpResponse
 from main.forms import CreateLocationForm
@@ -42,7 +42,7 @@ def index(request):
 @require_http_methods(["GET"])
 def favorites(request):
     context = {}
-    cities = Location.objects.filter(user=request.user)[:6]
+    cities = Location.objects.filter(user=request.user)[:5]
     form = CreateLocationForm(initial={'user': request.user}, auto_id=False)
     weather_data_list = []
     for city in cities:
@@ -56,6 +56,7 @@ def favorites(request):
                 "temperature": weather_raw_data["main"]["temp"],
                 "description": weather_raw_data["weather"][0]["description"],
                 "icon": weather_raw_data["weather"][0]["icon"],
+                "city_pk": city.pk,
             }
             weather_data_list.append(weather_data)
     context["title"] = "Weather Viewer - Избранные"
@@ -65,6 +66,7 @@ def favorites(request):
 
 @require_http_methods(["POST"])
 def create_location(request):
+    context = {}
     form = CreateLocationForm(request.POST)
     if form.is_valid():
         obj = form.save(commit=False)
@@ -77,12 +79,21 @@ def create_location(request):
                 "temperature": weather_raw_data["main"]["temp"],
                 "description": weather_raw_data["weather"][0]["description"],
                 "icon": weather_raw_data["weather"][0]["icon"],
+                "city_pk": None,
             }
-        obj.user = request.user
-        obj.latitude = weather_raw_data["coord"]["lat"]
-        obj.longitude = weather_raw_data["coord"]["lon"]
-        obj.save()
-    return render(request, "main/include/city_weather.html", {"weather_data": weather_data})
+            obj.user = request.user
+            obj.latitude = weather_raw_data["coord"]["lat"]
+            obj.longitude = weather_raw_data["coord"]["lon"]
+            obj.save()
+            weather_data["city_pk"] = obj.pk
+        context["weather_data"] = weather_data
+    return render(request, "main/include/city_weather_favorites.html", context)
+
+@require_http_methods(["DELETE"])
+def delete_location(request, pk):
+    location = get_object_or_404(Location, pk=pk)
+    location.delete()
+    return HttpResponse()
 
 def about(request):
     return HttpResponse("Здесь будет информация о приложении!")
