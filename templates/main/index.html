@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<div class="row" style="margin-bottom: 200px; margin-top: 160px">
+<div class="row" style="margin-bottom: 100px; margin-top: 100px">
     <div>
         <form method="post">
             {% csrf_token %}
@@ -10,6 +10,16 @@
             <button type="submit">Узнать погоду!</button>
         </form>
     </div>
+    
+    {% if messages %}
+    <ul class="error-messages">
+        {% for message in messages %}
+            {% if message.tags == 'error' %}
+                <li>{{ message }}</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    {% endif %}
 
     <div class="compare-container">
         {% if weather_data %}

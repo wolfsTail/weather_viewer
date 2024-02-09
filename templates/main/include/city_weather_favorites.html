@@ -1,4 +1,4 @@
-<div id="city_{{ weather_data.city_pk }}" class="city-container">    
+<div class="city-container">    
     <h2> {{ weather_data.city }}</h2>
     <h3> {{ weather_data.temperature }}°C</h3>
     <p> {{ weather_data.description }}</p>
@@ -6,8 +6,5 @@
     alt="{{ weather_data.description }}">
     <br>
     <button class="btn btn-danger"
-    hx-delete="{% url 'main:delete_location' weather_data.city_pk %}"
-    hx-target="#city_{{ weather_data.city_pk }}"                
-    hx-swap="outherHTML"
-    hx-confirm="Вы хотите удалить населенный пункт из избранного?">Удалить</button>
+    hx-delete="{% url 'main:delete_location' weather_data.city_pk %}">Удалить</button>
 </div>

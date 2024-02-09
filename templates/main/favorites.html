@@ -4,12 +4,20 @@
 
 {% include "main/include/create_city_form.html" %}
 
-<div id="location_list" class="cities-container" hx-trigger="htmx:afterSwap">
-    
-        {% for weather_data in weather_data_list %}            
-                {% include 'main/include/city_weather_favorites.html'%}            
+{% if messages %}
+        {% for message in messages %}
+                {{ message }}
         {% endfor %}
+{% endif %}
 
-</div>
+        <div id="location_list" class="compare-container"  
+        hx-target="closest div"
+        hx-confirm="Вы хотите удалить населенный пункт из избранного?">
+        
+                {% for weather_data in weather_data_list %}            
+                        {% include 'main/include/city_weather_favorites.html'%}            
+                {% endfor %}
+
+        </div>
 
 {% endblock content %}
