@@ -1,6 +1,7 @@
 <div class="city-container">    
     <h2> {{ weather_data.city }}</h2>
     <h3> {{ weather_data.temperature }}°C</h3>
+    <h3> {{ weather_data.pressure }} мм рт. ст.</h3>
     <p> {{ weather_data.description }}</p>
     <img src="http://openweathermap.org/img/w/{{ weather_data.icon }}.png" 
     alt="{{ weather_data.description }}">

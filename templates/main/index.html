@@ -11,15 +11,18 @@
         </form>
     </div>
     
-    {% if messages %}
-    <ul class="error-messages">
-        {% for message in messages %}
-            {% if message.tags == 'error' %}
-                <li>{{ message }}</li>
-            {% endif %}
-        {% endfor %}
-    </ul>
-    {% endif %}
+    <div class="error-container" hx-swap="outerHTML">
+        {% if messages %}
+        <ul class="error-messages">
+            {% for message in messages %}
+                {% if message.tags == 'error' %}
+                    <li class="error-message">{{ message }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <button hx-post="{% url 'main:hide_error' %}" hx-target="closest div">Ок</button>
+        {% endif %}
+    </div>
 
     <div class="compare-container">
         {% if weather_data %}

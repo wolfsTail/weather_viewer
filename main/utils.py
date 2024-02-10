@@ -1,4 +1,5 @@
 import requests
+import datetime
 
 
 def get_coordinates(city: str, API_KEY) -> tuple | None:
@@ -34,9 +35,19 @@ def get_weather_by_city(city: str, coordinates: tuple | None = None) -> dict | N
     coordinates = get_coordinates(city, API_KEY)
     return get_weather_value(coordinates, API_KEY)
 
+def get_weather_data(weather_raw_data: dict|None) -> dict:
+    weather_data = {
+            "today": datetime.datetime.utcfromtimestamp(weather_raw_data["dt"]).strftime("%d-%m-%Y"),
+            "city": weather_raw_data["name"],
+            "temperature": weather_raw_data["main"]["temp"],
+            "pressure": weather_raw_data["main"]["pressure"],
+            "description": weather_raw_data["weather"][0]["description"],
+            "icon": weather_raw_data["weather"][0]["icon"],
+        }
+    return weather_data
+
 
 if __name__ == "__main__":
-    city = "Минск"
-    counry_code = "ru"  
+    city = "Минск"     
     weather = get_weather_by_city(city)
     print(weather, type(weather))

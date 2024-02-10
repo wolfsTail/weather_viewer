@@ -1,0 +1,34 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+
+<main>
+    <section>
+        <h2>Weather-Viewer</h2>
+        <p>Веб-приложение для просмотра текущей погоды в интересующем пользователя населенном пункте. 
+            После регистрации, возможно добавление одного или нескольких населенных пунктов в избранное, 
+            в котором данные "локации" и будут отображаться.</p>
+    </section>
+
+    <section>
+        <h2>Реализация</h2>
+        <p>Информация о погоде любезно предоставляется сервисом: <a href="https://openweathermap.org/" target="_blank">OpenWeather</a></p>
+        <h2>Технологии используемые при разработке и развертывании:</h2>
+        <ul>
+            <li>Django</li>
+            <li>HTMX</li>
+            <li>PostgreSQL</li>
+            <li>NGINX</li>
+            <li>Gunicorn</li>
+        </ul>
+
+    </section>
+
+    <section>
+        <h2>Контакты</h2>
+        <p>Email: info@example.com</p>
+        <p>Telegram: @denisromanoff</p>
+    </section>
+</main>
+
+{% endblock content %}
