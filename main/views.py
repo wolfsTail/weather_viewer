@@ -78,8 +78,9 @@ def create_location(request):
             obj.save()
             weather_data["city_pk"] = obj.pk
         context["weather_data"] = weather_data
+        
+    return render(request, "main/include/city_not_found.html", context)
 
-    return render(request, "main/include/city_weather_favorites.html", context)
 
 @require_http_methods(["DELETE"])
 def delete_location(request, pk):

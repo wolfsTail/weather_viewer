@@ -41,6 +41,17 @@
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     <script src="https://unpkg.com/htmx.org@1.9.4"></script>
     <script>
+        window.addEventListener('scroll', function() {
+            let footer = document.querySelector('.footer');
+            let scrollPosition = window.scrollY;
+            if (scrollPosition > 200) {
+                footer.style.transform = 'translateY(0)';
+            } else {
+                footer.style.transform = 'translateY(100%)';
+            }
+        });
+    </script>
+    <script>
         function cngElementsAtr(cls, atr, val){
             var elems = document.getElementsByClassName(cls);
             for(var i = 0; i < elems.length; i++) {

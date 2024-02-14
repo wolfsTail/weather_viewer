@@ -7,16 +7,18 @@ from main.utils import get_weather_by_city
 
 class CreateLocationForm(forms.ModelForm):
     name = forms.CharField(
-        required=False, widget=forms.TextInput(attrs={"class": "clrtxt", "placeholder": "Название населенного пункта"})
+        required=True, widget=forms.TextInput(attrs={"class": "clrtxt", "placeholder": "Населенный пункт"})
     )
 
     class Meta:
         model = Location
-        fields = ["name"]  
+        fields = ["name",]  
     
     def clean_name(self):
         name = self.cleaned_data.get("name")
-        if name and not name.isspace():
-            return name
-        else:
+
+        if not name or not name.isspace():
             raise forms.ValidationError("Введите корректное название города!")
+        
+        return name
+
