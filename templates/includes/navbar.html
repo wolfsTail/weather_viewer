@@ -1,51 +1,11 @@
-{% comment %} <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3e3e3;">
-  <div class="container px-4 px-lg-5">
-    <a class="navbar-brand" href="{% url "main:index" %}">Weather viewer</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">        
-        {% if request.user.is_authenticated %}
-        <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url "main:favorites" %}">Избранные места</a></li>
-        {% endif %}
-        <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url "main:about" %}">О сайте</a></li>
-      </ul>
-      {% if request.user.is_authenticated %}
-      <div class="dropdown">
-        <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
-          aria-expanded="false">
-          <i class="bi bi-person-badge"></i>
-        </a>
-        <ul class="dropdown-menu text-small shadow">
-          <li><a class="dropdown-item" href="{% url 'users:profile' %}">Личный кабинет</a></li>
-          <li><a class="dropdown-item" href="{% url 'users:logout' %}">Выход</a></li>
-        </ul>
-      </div>
-      {% else %}
-      <div class="dropdown">
-        <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
-          aria-expanded="false">
-          <i class="bi bi-clipboard-x"></i>
-        </a>
-        <ul class="dropdown-menu text-small shadow">
-          <li><a class="dropdown-item" href="{% url 'users:login' %}">Войти</a></li>
-          <li><a class="dropdown-item" href="{% url 'users:registration' %}">Зарегистрироваться!</a></li>
-        </ul>
-      </div>
-      {% endif %}
-    </div>
-  </div>
-</nav>  {% endcomment %}
-<nav class="navbar bg-body-tertiary" style="background-color: #e3e3e3;">
-  <div class="container-fluid" style="height: 30px;">
+<nav class="navbar bg-body-tertiary bg-primary">
+  <div class="container-fluid" style="height: 40px;">
     <a class="navbar-brand" href="{% url "main:index" %}">Weather viewer</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-      <div class="offcanvas-header" style="background-color: #e3e3e3; text-align: left;">
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style="width: 250px;">
+      <div class="offcanvas-header" style="background-color: #e3e3e3; text-align: left; background-color: #1266F1; height: 57px;">
         <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Меню</h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>

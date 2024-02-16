@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_http_methods
 from django.http import HttpResponse
 from main.forms import CreateLocationForm
@@ -78,6 +78,7 @@ def create_location(request):
             obj.save()
             weather_data["city_pk"] = obj.pk
         context["weather_data"] = weather_data
+        return render(request, "main/include/city_weather_favorites.html", context)
         
     return render(request, "main/include/city_not_found.html", context)
 

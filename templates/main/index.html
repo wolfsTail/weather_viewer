@@ -11,16 +11,16 @@
         </form>
     </div>
     
-    <div class="error-container" hx-swap="outerHTML">
+    <div class="error-container" hx-swap="outerHTML" hx-confirm="Вы точно устали созерцать ошибку?">
         {% if messages %}
         <ul class="error-messages">
             {% for message in messages %}
                 {% if message.tags == 'error' %}
                     <li class="error-message">{{ message }}</li>
+                    <button hx-post="{% url 'main:hide_error' %}" hx-target="closest div">Ок</button>
                 {% endif %}
             {% endfor %}
         </ul>
-        <button hx-post="{% url 'main:hide_error' %}" hx-target="closest div">Ок</button>
         {% endif %}
     </div>
 
