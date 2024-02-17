@@ -20,15 +20,17 @@ def index(request):
             try:
                 weather_raw_data = get_weather_by_city(city)
             except ValueError:
-                messages.error(request, "Ошибка. Введите корректное название города\
-                                или попробуйте позже!")           
+                messages.error(
+                    request,
+                    "Ошибка. Введите корректное название города и попробуйте позже!",
+                )
                 return render(request, "main/index.html", context)
 
             weather_data = get_weather_data(weather_raw_data)
-            context["weather_data"] = weather_data           
+            context["weather_data"] = weather_data
 
         else:
-            messages.error(request, "Ошибка. Введите корректное название города.")                        
+            messages.error(request, "Ошибка. Введите корректное название города.")
 
     return render(request, "main/index.html", context)
 
@@ -38,7 +40,7 @@ def index(request):
 def favorites(request):
     context = {}
     context["title"] = "Weather Viewer - Избранные"
-    form = CreateLocationForm(initial={'user': request.user}, auto_id=False)
+    form = CreateLocationForm(initial={"user": request.user}, auto_id=False)
     cities = Location.objects.filter(user=request.user)
     weather_data_list = []
 
@@ -50,11 +52,12 @@ def favorites(request):
             weather_data = get_weather_data(weather_raw_data)
             weather_data["city_pk"] = city.pk
             weather_data_list.append(weather_data)
-    
+
     context["weather_data_list"] = weather_data_list
     context["form"] = form
 
     return render(request, "main/favorites.html", context)
+
 
 @require_http_methods(["POST"])
 def create_location(request):
@@ -63,15 +66,22 @@ def create_location(request):
 
     if form.is_valid():
         obj = form.save(commit=False)
-        city = form.cleaned_data["name"]
+        city = form.cleaned_data["name"]        
+
+        favorites_cities = Location.objects.filter(user=request.user)               
+
+
+        if city in favorites_cities.values_list("name", flat=True):
+            return render(request, "main/include/city_already_exists.html", context)
 
         try:
             weather_raw_data = get_weather_by_city(city)
-        except ValueError:            
+        except ValueError:
             return render(request, "main/include/city_not_found.html", context)
-        
+
         if weather_raw_data is not None:
             weather_data = get_weather_data(weather_raw_data)
+            obj.name = weather_raw_data["name"]
             obj.user = request.user
             obj.latitude = weather_raw_data["coord"]["lat"]
             obj.longitude = weather_raw_data["coord"]["lon"]
@@ -79,7 +89,7 @@ def create_location(request):
             weather_data["city_pk"] = obj.pk
         context["weather_data"] = weather_data
         return render(request, "main/include/city_weather_favorites.html", context)
-        
+
     return render(request, "main/include/city_not_found.html", context)
 
 
@@ -89,9 +99,11 @@ def delete_location(request, pk):
     location.delete()
     return HttpResponse(status=200)
 
+
 @require_http_methods(["POST"])
 def hide_error(request):
     return HttpResponse(status=200)
+
 
 def about(request):
     context = {}

@@ -12,13 +12,4 @@ class CreateLocationForm(forms.ModelForm):
 
     class Meta:
         model = Location
-        fields = ["name",]  
-    
-    def clean_name(self):
-        name = self.cleaned_data.get("name")
-
-        if not name or not name.isspace():
-            raise forms.ValidationError("Введите корректное название города!")
-        
-        return name
-
+        fields = ["name",]      
